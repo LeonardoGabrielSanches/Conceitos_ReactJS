@@ -12,10 +12,19 @@ function App() {
         api.get('/projects').then(response => {
             setProjects(response.data);
         });
-    }, []);
+    }, [projects]);
 
-    function handleAddProject() {
-        setProjects([...projects, `${Date.now()}`]);
+    async function handleAddProject() {
+        const param = {
+            title: `Front-end com ReactJS ${Date.now()}`,
+            owner: 'Leonardo'
+        };
+
+        const response = await api.post('/projects', param);
+
+        const project = response.data;
+
+        setProjects([...projects, project]);
     }
 
     return (
